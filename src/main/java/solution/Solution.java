@@ -21,21 +21,24 @@ public class Solution {
             String lineFile;
             BufferedReader readBuf = new BufferedReader(new FileReader(FILE_MOVING_COST));
             while ((lineFile = readBuf.readLine()) != null) {
-                String[] creatureAndTerrain = lineFile.split(":", 2);
-                if (creatureAndTerrain.length < 2)
-                    throw new SolutionException("В строке не найдена сущность или местность");
+                String[] creatureAndTerrain = getParameters(lineFile, ":");
                 if (!creature.equals(creatureAndTerrain[0])) continue;
-                String[] costAndTerrain = creatureAndTerrain[1].split(",", 2);
-                if (costAndTerrain.length < 2)
-                    throw new SolutionException("В строке не найдена местность или её стоимость");
+                String[] costAndTerrain = getParameters(creatureAndTerrain[1], ",");
                 terrainAndCost.put(costAndTerrain[0].charAt(0), Integer.parseInt(costAndTerrain[1]));
             }
             if (terrainAndCost.size() < AMOUNT_TERRAIN) throw new SolutionException("Количество местности должно быть " + AMOUNT_TERRAIN);
-        }catch(IOException e){
+        }catch(IOException | NumberFormatException |  IndexOutOfBoundsException e){
             throw new SolutionException("Ошибка при чтении файла ", e.getCause());
         }
 
         return terrainAndCost;
+    }
+
+    private static String[] getParameters(String line, String delimiter) throws SolutionException {
+        String[] parameters = line.split(delimiter, 2);
+        if (parameters.length < 2)
+            throw new SolutionException("В строке нет второго параметра");
+        return parameters;
     }
 
 }
