@@ -1,4 +1,4 @@
-package solution.movingCost;
+package solution.graph;
 import Exception.SolutionException;
 import org.junit.jupiter.api.Test;
 
@@ -9,14 +9,14 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class movingCostTest {
+class graphTest {
     @Test
     void delimiter() throws SolutionException {
-        String[] testHandR = movingCost.getParameters("H:R", ":");
+        String[] testHandR = graph.getParameters("H:R", ":");
         assertEquals("H",testHandR[0]);
         assertEquals("R",testHandR[1]);
 
-        testHandR = movingCost.getParameters("H,R", ",");
+        testHandR = graph.getParameters("H,R", ",");
         assertEquals("H",testHandR[0]);
         assertEquals("R",testHandR[1]);
     }
@@ -24,7 +24,7 @@ class movingCostTest {
     @Test
     void negativeNoneTwoParametrSolutionException() {
         assertThrows(SolutionException.class, () -> {
-            movingCost.getParameters("H:", ",");
+            graph.getParameters("H:", ",");
         });
     }
 
@@ -35,7 +35,7 @@ class movingCostTest {
                 "Human:X,3\n" +
                 "Human:A,4\n";
         Reader readBuf = new StringReader(initialStr);
-        HashMap<Character, Integer> terrainAndCost = movingCost.get(readBuf, "Human");
+        HashMap<Character, Integer> terrainAndCost = graph.getCostMoving(readBuf, "Human");
         assertTrue(terrainAndCost.containsKey('S'));
         assertTrue(terrainAndCost.containsKey('T'));
         assertTrue(terrainAndCost.containsKey('X'));
@@ -55,7 +55,7 @@ class movingCostTest {
                 "Human:X,3\n";
         Reader readBuf = new StringReader(initialStr);
         assertThrows(SolutionException.class, () -> {
-            movingCost.get(readBuf, "Human");
+            graph.getCostMoving(readBuf, "Human");
         });
         readBuf.close();
     }

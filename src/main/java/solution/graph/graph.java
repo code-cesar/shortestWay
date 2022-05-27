@@ -1,4 +1,4 @@
-package solution.movingCost;
+package solution.graph;
 
 import Exception.SolutionException;
 
@@ -7,10 +7,40 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
 
-public class movingCost {
+public class graph {
     private static final int AMOUNT_TERRAIN = 4;
+    private static final int LENGTH_FIELD = 16;
 
-    public static HashMap<Character, Integer> get(Reader fileFlow, String creature) throws SolutionException {
+    private static HashMap<Integer, HashMap<Integer, Integer>> initializationGraph(String field, String creature, Reader fileFlow) throws SolutionException {
+        if(field.length() < LENGTH_FIELD)throw new SolutionException("Игровое поле должно быть размером: " + LENGTH_FIELD);
+        HashMap<Integer, HashMap<Integer, Integer>> graph = new HashMap<>();
+        HashMap<Character, Integer> terrainAndCost = getCostMoving(fileFlow, creature);
+        for(int i = 0; i < LENGTH_FIELD; i ++) {
+            HashMap<Integer, Integer> neighbours = new HashMap<>();
+            if(i < LENGTH_FIELD - 1) {
+                int rightNeighbour = i + 1;
+                if (rightNeighbour % 4 != 0){
+                    neighbours.put(rightNeighbour, terrainAndCost.get(field.charAt(rightNeighbour)));
+                }
+                int leftNeighbour = i - 1;
+                if (i % 4 != 0 && leftNeighbour != 0){
+                    neighbours.put(leftNeighbour, terrainAndCost.get(field.charAt(leftNeighbour)));
+                }
+                int upstairsNeighbour = i + 4;
+                if (upstairsNeighbour < LENGTH_FIELD){
+                    neighbours.put(upstairsNeighbour, terrainAndCost.get(field.charAt(upstairsNeighbour)));
+                }
+                int bottomNeighbour = i - 4;
+                if (bottomNeighbour > -1 && bottomNeighbour != 0){
+                    neighbours.put(bottomNeighbour, terrainAndCost.get(field.charAt(bottomNeighbour)));
+                }
+            }
+            graph.put(i, neighbours);
+        }
+        return graph;
+    }
+
+    public static HashMap<Character, Integer> getCostMoving(Reader fileFlow, String creature) throws SolutionException {
         HashMap<Character, Integer> terrainAndCost = new HashMap<>();
         BufferedReader readBuf = null;
         try {
