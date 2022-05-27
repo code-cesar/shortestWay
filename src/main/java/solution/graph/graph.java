@@ -1,6 +1,7 @@
 package solution.graph;
 
 import Exception.SolutionException;
+import Util.constants;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,16 +9,14 @@ import java.io.Reader;
 import java.util.HashMap;
 
 public class graph {
-    private static final int AMOUNT_TERRAIN = 4;
-    private static final int LENGTH_FIELD = 16;
 
-    private static HashMap<Integer, HashMap<Integer, Integer>> initializationGraph(String field, String creature, Reader fileFlow) throws SolutionException {
-        if(field.length() < LENGTH_FIELD)throw new SolutionException("Игровое поле должно быть размером: " + LENGTH_FIELD);
+    public static HashMap<Integer, HashMap<Integer, Integer>> initializationGraph(String field, String creature, Reader fileFlow) throws SolutionException {
+        if(field.length() != constants.LENGTH_FIELD)throw new SolutionException("Игровое поле должно быть размером: " + constants.LENGTH_FIELD);
         HashMap<Integer, HashMap<Integer, Integer>> graph = new HashMap<>();
         HashMap<Character, Integer> terrainAndCost = getCostMoving(fileFlow, creature);
-        for(int i = 0; i < LENGTH_FIELD; i ++) {
+        for(int i = 0; i < constants.LENGTH_FIELD; i ++) {
             HashMap<Integer, Integer> neighbours = new HashMap<>();
-            if(i < LENGTH_FIELD - 1) {
+            if(i < constants.LENGTH_FIELD - 1) {
                 int rightNeighbour = i + 1;
                 if (rightNeighbour % 4 != 0){
                     neighbours.put(rightNeighbour, terrainAndCost.get(field.charAt(rightNeighbour)));
@@ -27,7 +26,7 @@ public class graph {
                     neighbours.put(leftNeighbour, terrainAndCost.get(field.charAt(leftNeighbour)));
                 }
                 int upstairsNeighbour = i + 4;
-                if (upstairsNeighbour < LENGTH_FIELD){
+                if (upstairsNeighbour < constants.LENGTH_FIELD){
                     neighbours.put(upstairsNeighbour, terrainAndCost.get(field.charAt(upstairsNeighbour)));
                 }
                 int bottomNeighbour = i - 4;
@@ -52,8 +51,8 @@ public class graph {
                 String[] costAndTerrain = getParameters(creatureAndTerrain[1], ",");
                 terrainAndCost.put(costAndTerrain[0].charAt(0), Integer.parseInt(costAndTerrain[1]));
             }
-            if (terrainAndCost.size() != AMOUNT_TERRAIN)
-                throw new SolutionException("Количество местности должно быть " + AMOUNT_TERRAIN);
+            if (terrainAndCost.size() != constants.AMOUNT_TERRAIN)
+                throw new SolutionException("Количество местности должно быть " + constants.AMOUNT_TERRAIN);
         }catch(IOException | NumberFormatException e){
             throw new SolutionException("Ошибка при чтении файла ", e.getCause());
         }finally {
@@ -73,4 +72,5 @@ public class graph {
             throw new SolutionException("В строке нет второго параметра");
         return parameters;
     }
+
 }

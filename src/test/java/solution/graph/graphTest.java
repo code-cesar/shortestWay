@@ -1,5 +1,6 @@
 package solution.graph;
 import Exception.SolutionException;
+import Util.constants;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -59,6 +60,47 @@ class graphTest {
         });
         readBuf.close();
     }
+
+    @Test
+    void getGraph() throws IOException, SolutionException {
+        String initialStr = "Human:S,1\n" +
+                "Human:T,2\n" +
+                "Human:W,3\n" +
+                "Human:P,4\n";
+
+        Reader readBuf = new StringReader(initialStr);
+        HashMap<Integer, HashMap<Integer, Integer>> graphHandel = graph.initializationGraph(
+                "STWSWTPPTPTTPWPP",
+                "Human",
+                readBuf
+        );
+        assertEquals(constants.LENGTH_FIELD,graphHandel.size());
+        for(int i = 0; i < constants.LENGTH_FIELD; i ++){
+            assertTrue(graphHandel.containsKey(i));
+        }
+        readBuf.close();
+    }
+
+    @Test
+    void negativeGetGraphLowLength() throws IOException {
+
+        String initialStr = "Human:S,1\n" +
+                "Human:T,2\n" +
+                "Human:W,3\n" +
+                "Human:P,4\n";
+
+        Reader readBuf = new StringReader(initialStr);
+
+        assertThrows(SolutionException.class, () -> {
+            graph.initializationGraph(
+                    "STWSWTPTPTTPWPP",
+                    "",
+                    readBuf
+            );
+        });
+        readBuf.close();
+    }
+
 
 
 
