@@ -22,7 +22,7 @@ public class movingCost {
                 String[] costAndTerrain = getParameters(creatureAndTerrain[1], ",");
                 terrainAndCost.put(costAndTerrain[0].charAt(0), Integer.parseInt(costAndTerrain[1]));
             }
-            if (terrainAndCost.size() < AMOUNT_TERRAIN || terrainAndCost.size()  > AMOUNT_TERRAIN)
+            if (terrainAndCost.size() != AMOUNT_TERRAIN)
                 throw new SolutionException("Количество местности должно быть " + AMOUNT_TERRAIN);
         }catch(IOException | NumberFormatException e){
             throw new SolutionException("Ошибка при чтении файла ", e.getCause());
