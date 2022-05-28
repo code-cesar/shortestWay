@@ -15,8 +15,8 @@ public class Solution {
         int numberShortestWay = 0;
         try {
             HashMap<Integer, HashMap<Integer, Integer>> graphHandel = Graph.initializationGraph(
-                    field,
-                    creature,
+                    field.toUpperCase(),
+                    creature.toLowerCase(),
                     new FileReader(constants.FILE_MOVING_COST));
             numberShortestWay = getShortestWayToLastNode(graphHandel);
         } catch (SolutionException | FileNotFoundException e) {

@@ -47,9 +47,9 @@ public class Graph {
             readBuf = new BufferedReader(fileFlow);
             while ((lineFile = readBuf.readLine()) != null) {
                 String[] creatureAndTerrain = getParameters(lineFile, ":");
-                if (!creature.equals(creatureAndTerrain[0])) continue;
+                if (!creature.equals(creatureAndTerrain[0].toLowerCase())) continue;
                 String[] costAndTerrain = getParameters(creatureAndTerrain[1], ",");
-                terrainAndCost.put(costAndTerrain[0].charAt(0), Integer.parseInt(costAndTerrain[1]));
+                terrainAndCost.put(costAndTerrain[0].toUpperCase().charAt(0), Integer.parseInt(costAndTerrain[1]));
             }
             if (terrainAndCost.size() != constants.AMOUNT_TERRAIN)
                 throw new SolutionException("Количество местности должно быть " + constants.AMOUNT_TERRAIN);
