@@ -43,6 +43,7 @@ class SolutionTest {
         node.put(1, 5);
         node.put(2, 6);
         HashMap<Integer, Integer> tableCost = Solution.createTableCosts(node);
+        Solution.processedNode = null;
         assertThrows(SolutionException.class, () -> {
             Solution.findLowestCost(tableCost);
         });
