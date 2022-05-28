@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
 
-public class graph {
+public class Graph {
 
     public static HashMap<Integer, HashMap<Integer, Integer>> initializationGraph(String field, String creature, Reader fileFlow) throws SolutionException {
         if(field.length() != constants.LENGTH_FIELD)throw new SolutionException("Игровое поле должно быть размером: " + constants.LENGTH_FIELD);

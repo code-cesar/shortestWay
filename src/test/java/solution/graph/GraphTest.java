@@ -10,14 +10,14 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class graphTest {
+class GraphTest {
     @Test
     void delimiter() throws SolutionException {
-        String[] testHandR = graph.getParameters("H:R", ":");
+        String[] testHandR = Graph.getParameters("H:R", ":");
         assertEquals("H",testHandR[0]);
         assertEquals("R",testHandR[1]);
 
-        testHandR = graph.getParameters("H,R", ",");
+        testHandR = Graph.getParameters("H,R", ",");
         assertEquals("H",testHandR[0]);
         assertEquals("R",testHandR[1]);
     }
@@ -25,7 +25,7 @@ class graphTest {
     @Test
     void negativeNoneTwoParametrSolutionException() {
         assertThrows(SolutionException.class, () -> {
-            graph.getParameters("H:", ",");
+            Graph.getParameters("H:", ",");
         });
     }
 
@@ -36,7 +36,7 @@ class graphTest {
                 "Human:X,3\n" +
                 "Human:A,4\n";
         Reader readBuf = new StringReader(initialStr);
-        HashMap<Character, Integer> terrainAndCost = graph.getCostMoving(readBuf, "Human");
+        HashMap<Character, Integer> terrainAndCost = Graph.getCostMoving(readBuf, "Human");
         assertTrue(terrainAndCost.containsKey('S'));
         assertTrue(terrainAndCost.containsKey('T'));
         assertTrue(terrainAndCost.containsKey('X'));
@@ -56,7 +56,7 @@ class graphTest {
                 "Human:X,3\n";
         Reader readBuf = new StringReader(initialStr);
         assertThrows(SolutionException.class, () -> {
-            graph.getCostMoving(readBuf, "Human");
+            Graph.getCostMoving(readBuf, "Human");
         });
         readBuf.close();
     }
@@ -69,7 +69,7 @@ class graphTest {
                 "Human:P,4\n";
 
         Reader readBuf = new StringReader(initialStr);
-        HashMap<Integer, HashMap<Integer, Integer>> graphHandel = graph.initializationGraph(
+        HashMap<Integer, HashMap<Integer, Integer>> graphHandel = Graph.initializationGraph(
                 "STWSWTPPTPTTPWPP",
                 "Human",
                 readBuf
@@ -92,7 +92,7 @@ class graphTest {
         Reader readBuf = new StringReader(initialStr);
 
         assertThrows(SolutionException.class, () -> {
-            graph.initializationGraph(
+            Graph.initializationGraph(
                     "STWSWTPTPTTPWPP",
                     "",
                     readBuf
