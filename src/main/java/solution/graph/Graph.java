@@ -42,6 +42,7 @@ public class Graph {
     public static HashMap<Character, Integer> getCostMoving(Reader fileFlow, String creature) throws SolutionException {
         HashMap<Character, Integer> terrainAndCost = new HashMap<>();
         BufferedReader readBuf = null;
+        creature = creature.toLowerCase();
         try {
             String lineFile;
             readBuf = new BufferedReader(fileFlow);
