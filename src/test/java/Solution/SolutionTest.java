@@ -1,4 +1,4 @@
-package solution;
+package Solution;
 
 import Exception.SolutionException;
 import Util.constants;

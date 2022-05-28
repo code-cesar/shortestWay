@@ -1,4 +1,4 @@
-import solution.Solution;
+import Solution.Solution;
 
 public class Main {
     public static  void main (String args []){

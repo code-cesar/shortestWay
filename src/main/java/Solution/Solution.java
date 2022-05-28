@@ -1,6 +1,6 @@
-package solution;
+package Solution;
 import Util.constants;
-import solution.graph.Graph;
+import Solution.Graph.Graph;
 import Exception.SolutionException;
 
 import java.io.FileNotFoundException;

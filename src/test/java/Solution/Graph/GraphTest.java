@@ -1,4 +1,4 @@
-package solution.graph;
+package Solution.Graph;
 import Exception.SolutionException;
 import Util.constants;
 import org.junit.jupiter.api.Test;
