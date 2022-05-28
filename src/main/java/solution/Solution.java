@@ -1,6 +1,6 @@
 package solution;
 import Util.constants;
-import solution.graph.graph;
+import solution.graph.Graph;
 import Exception.SolutionException;
 
 import java.io.FileNotFoundException;
@@ -9,24 +9,24 @@ import java.util.HashMap;
 
 
 public class Solution {
-    private static boolean[] processedNode = null;
+    public static boolean[] processedNode = null;
 
     public static int getResult(String field, String creature){
-        int numberShorttestWay = 0;
+        int numberShortestWay = 0;
         try {
-            HashMap<Integer, HashMap<Integer, Integer>> graphHandel = graph.initializationGraph(
+            HashMap<Integer, HashMap<Integer, Integer>> graphHandel = Graph.initializationGraph(
                     field,
                     creature,
                     new FileReader(constants.FILE_MOVING_COST));
-            numberShorttestWay = getShortestWayToLastNode(graphHandel);
+            numberShortestWay = getShortestWayToLastNode(graphHandel);
         } catch (SolutionException | FileNotFoundException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }
-        return numberShorttestWay;
+        return numberShortestWay;
     }
 
-    private static int getShortestWayToLastNode(HashMap<Integer, HashMap<Integer, Integer>> graph) throws SolutionException {
+    public static int getShortestWayToLastNode(HashMap<Integer, HashMap<Integer, Integer>> graph) throws SolutionException {
         HashMap<Integer, Integer> tableCostsStartNode = createTableCosts(graph.get(0));
         processedNode = new boolean[constants.LENGTH_FIELD];
         int node = findLowestCost(tableCostsStartNode);
@@ -47,7 +47,7 @@ public class Solution {
         return tableCostsStartNode.get(constants.LENGTH_FIELD - 1);
     }
 
-    private static HashMap<Integer, Integer> createTableCosts (HashMap<Integer, Integer> node){
+    public static HashMap<Integer, Integer> createTableCosts (HashMap<Integer, Integer> node){
         HashMap<Integer, Integer> tableCosts = new HashMap<>(node);
         for(int i = 1; i < constants.LENGTH_FIELD; i ++){
             tableCosts.putIfAbsent(i, Integer.MAX_VALUE);
@@ -55,7 +55,7 @@ public class Solution {
         return tableCosts;
     }
 
-    private static int findLowestCost(HashMap<Integer, Integer> tableCosts) throws SolutionException {
+    public static int findLowestCost(HashMap<Integer, Integer> tableCosts) throws SolutionException {
         if(processedNode == null)throw new SolutionException("Список обработанных узлов не задан");
         int lowestCost = Integer.MAX_VALUE;
         int lowestNodeInTable = constants.INVALID_FIND_NODE;
