@@ -26,7 +26,7 @@ public class Solution {
         return numberShortestWay;
     }
 
-    public static int getShortestWayToLastNode(HashMap<Integer, HashMap<Integer, Integer>> graph) throws SolutionException {
+    private static int getShortestWayToLastNode(HashMap<Integer, HashMap<Integer, Integer>> graph) throws SolutionException {
         HashMap<Integer, Integer> tableCostsStartNode = createTableCosts(graph.get(0));
         processedNode = new boolean[constants.LENGTH_FIELD];
         int node = findLowestCost(tableCostsStartNode);
